@@ -17,6 +17,10 @@ public class InstructorDetail {
     @Column(name = "hobby")
     private String hobby;
 
+    // Set up bidirectional mapping where fetching instructor detail also fetches associated instructor
+    @OneToOne(mappedBy = "instructorDetail", cascade = CascadeType.ALL)
+    private Instructor instructor;
+
     public InstructorDetail() {
     }
 
@@ -42,5 +46,23 @@ public class InstructorDetail {
 
     public void setHobby(String hobby) {
         this.hobby = hobby;
+    }
+
+    public Instructor getInstructor() {
+        return instructor;
+    }
+
+    public void setInstructor(Instructor instructor) {
+        this.instructor = instructor;
+    }
+
+    @Override
+    public String toString() {
+        return "InstructorDetail{" +
+                "id=" + id +
+                ", youtubeChannel='" + youtubeChannel + '\'' +
+                ", hobby='" + hobby + '\'' +
+                ", instructor=" + instructor +
+                '}';
     }
 }
