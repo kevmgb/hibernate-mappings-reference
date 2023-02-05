@@ -1,13 +1,13 @@
 package com.example.hibernatemappingsreference.service;
 
-import com.example.hibernatemappingsreference.datalayer.entity.Instructor;
-import com.example.hibernatemappingsreference.datalayer.entity.InstructorDetail;
-import com.example.hibernatemappingsreference.model.InstructorModel;
+import com.example.hibernatemappingsreference.model.request.InstructorModelRequest;
+import com.example.hibernatemappingsreference.model.response.InstructorDetailModelResponse;
+import com.example.hibernatemappingsreference.model.response.InstructorModelResponse;
 
 public interface MappingsService {
-    void saveInstructor(InstructorModel instructorModel);
+    void saveInstructor(InstructorModelRequest instructorModelRequest);
 
-    InstructorModel getInstructor(String id);
+    InstructorModelResponse getInstructor(String id);
 
-    InstructorModel getInstructorDetail(String id);
+    InstructorModelRequest getInstructorDetail(String id);
 }

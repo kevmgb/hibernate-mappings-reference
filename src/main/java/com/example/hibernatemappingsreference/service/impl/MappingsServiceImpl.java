@@ -4,11 +4,14 @@ import com.example.hibernatemappingsreference.datalayer.entity.Instructor;
 import com.example.hibernatemappingsreference.datalayer.entity.InstructorDetail;
 import com.example.hibernatemappingsreference.datalayer.repository.InstructorDetailRepository;
 import com.example.hibernatemappingsreference.datalayer.repository.InstructorRepository;
-import com.example.hibernatemappingsreference.model.InstructorDetailModel;
-import com.example.hibernatemappingsreference.model.InstructorModel;
+import com.example.hibernatemappingsreference.model.dto.CourseDto;
+import com.example.hibernatemappingsreference.model.request.InstructorDetailModelResponse;
+import com.example.hibernatemappingsreference.model.request.InstructorModelRequest;
+import com.example.hibernatemappingsreference.model.response.InstructorModelResponse;
 import com.example.hibernatemappingsreference.service.MappingsService;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.Optional;
 
 @Service
@@ -22,56 +25,64 @@ public class MappingsServiceImpl implements MappingsService {
     }
 
     @Override
-    public void saveInstructor(InstructorModel instructorModel) {
+    public void saveInstructor(InstructorModelRequest instructorModelRequest) {
         InstructorDetail instructorDetail = new InstructorDetail();
-        instructorDetail.setHobby(instructorModel.getInstructorDetail().getHobby());
-        instructorDetail.setYoutubeChannel(instructorModel.getInstructorDetail().getYoutubeChannel());
+        instructorDetail.setHobby(instructorModelRequest.getInstructorDetail().getHobby());
+        instructorDetail.setYoutubeChannel(instructorModelRequest.getInstructorDetail().getYoutubeChannel());
 
         Instructor instructor = new Instructor();
-        instructor.setFirstName(instructorModel.getFirstName());
-        instructor.setLastName(instructorModel.getLastName());
-        instructor.setEmail(instructorModel.getEmail());
+        instructor.setFirstName(instructorModelRequest.getFirstName());
+        instructor.setLastName(instructorModelRequest.getLastName());
+        instructor.setEmail(instructorModelRequest.getEmail());
         instructor.setInstructorDetail(instructorDetail);
+        instructorModelRequest.getCourseList().forEach(s -> {
+            instructor.add(s);
+        });
 
         instructorRepository.save(instructor);
     }
 
     @Override
-    public InstructorModel getInstructor(String id) {
+    public InstructorModelResponse getInstructor(String id) {
         Optional<Instructor> instructor = instructorRepository.findById(Integer.valueOf(id));
 
         if (instructor.isPresent()) {
-            InstructorDetailModel instructorDetailModel = new InstructorDetailModel();
-            instructorDetailModel.setHobby(instructor.get().getInstructorDetail().getHobby());
-            instructorDetailModel.setYoutubeChannel(instructor.get().getInstructorDetail().getYoutubeChannel());
+            InstructorDetailModelResponse instructorDetailModelResponse = new InstructorDetailModelResponse();
+            instructorDetailModelResponse.setHobby(instructor.get().getInstructorDetail().getHobby());
+            instructorDetailModelResponse.setYoutubeChannel(instructor.get().getInstructorDetail().getYoutubeChannel());
 
-            InstructorModel instructorModel = new InstructorModel();
-            instructorModel.setFirstName(instructor.get().getFirstName());
-            instructorModel.setLastName(instructor.get().getLastName());
-            instructorModel.setEmail(instructor.get().getEmail());
-            instructorModel.setInstructorDetail(instructorDetailModel);
+            InstructorModelResponse instructorModelResponse = new InstructorModelResponse();
+            instructorModelResponse.setFirstName(instructor.get().getFirstName());
+            instructorModelResponse.setLastName(instructor.get().getLastName());
+            instructorModelResponse.setEmail(instructor.get().getEmail());
+            instructorModelResponse.setInstructorDetail(instructorDetailModelResponse);
 
-            return instructorModel;
+            instructor.get().getCourseList().forEach(s -> {
+                CourseDto courseDto = new CourseDto(s.getId(), s.getTitle());
+                instructorModelResponse.getCourseList().add(courseDto);
+            });
+
+            return instructorModelResponse;
         }
         return null;
     }
 
     @Override
-    public InstructorModel getInstructorDetail(String id) {
+    public InstructorModelRequest getInstructorDetail(String id) {
         Optional<InstructorDetail> instructorDetail = instructorDetailRepository.findById(Integer.valueOf(id));
 
         if (instructorDetail.isPresent()) {
-            InstructorDetailModel instructorDetailModel = new InstructorDetailModel();
-            instructorDetailModel.setHobby(instructorDetail.get().getHobby());
-            instructorDetailModel.setYoutubeChannel(instructorDetail.get().getYoutubeChannel());
+            InstructorDetailModelResponse instructorDetailModelRequest = new InstructorDetailModelResponse();
+            instructorDetailModelRequest.setHobby(instructorDetail.get().getHobby());
+            instructorDetailModelRequest.setYoutubeChannel(instructorDetail.get().getYoutubeChannel());
 
-            InstructorModel instructorModel = new InstructorModel();
-            instructorModel.setFirstName(instructorDetail.get().getInstructor().getFirstName());
-            instructorModel.setLastName(instructorDetail.get().getInstructor().getLastName());
-            instructorModel.setEmail(instructorDetail.get().getInstructor().getEmail());
-            instructorModel.setInstructorDetail(instructorDetailModel);
+            InstructorModelRequest instructorModelRequest = new InstructorModelRequest();
+            instructorModelRequest.setFirstName(instructorDetail.get().getInstructor().getFirstName());
+            instructorModelRequest.setLastName(instructorDetail.get().getInstructor().getLastName());
+            instructorModelRequest.setEmail(instructorDetail.get().getInstructor().getEmail());
+            instructorModelRequest.setInstructorDetail(instructorDetailModelRequest);
 
-            return instructorModel;
+            return instructorModelRequest;
         }
         return null;
     }

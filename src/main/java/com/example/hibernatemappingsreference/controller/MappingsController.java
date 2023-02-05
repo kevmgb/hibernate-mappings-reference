@@ -1,9 +1,8 @@
 package com.example.hibernatemappingsreference.controller;
 
-import com.example.hibernatemappingsreference.datalayer.entity.Instructor;
-import com.example.hibernatemappingsreference.datalayer.entity.InstructorDetail;
-import com.example.hibernatemappingsreference.model.InstructorDetailModel;
-import com.example.hibernatemappingsreference.model.InstructorModel;
+import com.example.hibernatemappingsreference.model.request.InstructorModelRequest;
+import com.example.hibernatemappingsreference.model.response.InstructorDetailModelResponse;
+import com.example.hibernatemappingsreference.model.response.InstructorModelResponse;
 import com.example.hibernatemappingsreference.service.MappingsService;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -18,18 +17,18 @@ public class MappingsController {
     }
 
     @PostMapping("/createInstructor")
-    private String createInstructor(@RequestBody @Validated InstructorModel instructorModel) {
-        service.saveInstructor(instructorModel);
+    private String createInstructor(@RequestBody @Validated InstructorModelRequest instructorModelRequest) {
+        service.saveInstructor(instructorModelRequest);
         return "Success";
     }
 
     @GetMapping("/getInstructor/{id}")
-    private InstructorModel getInstructor(@PathVariable String id) {
+    private InstructorModelResponse getInstructor(@PathVariable String id) {
         return service.getInstructor(id);
     }
 
     @GetMapping("/getInstructorDetail/{id}")
-    private InstructorModel getInstructorDetail(@PathVariable String id) {
+    private InstructorModelRequest getInstructorDetail(@PathVariable String id) {
         return service.getInstructorDetail(id);
     }
 }

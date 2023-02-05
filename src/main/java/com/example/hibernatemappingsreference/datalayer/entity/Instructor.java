@@ -1,6 +1,8 @@
 package com.example.hibernatemappingsreference.datalayer.entity;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "instructor")
@@ -23,6 +25,10 @@ public class Instructor {
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "instructor_detail_id")
     private InstructorDetail instructorDetail;
+
+    // If you delete an instructor, do not delete their courses hence the cascade types
+    @OneToMany(mappedBy = "instructor", cascade = {CascadeType.PERSIST ,CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH})
+    private List<Course> courseList;
 
     public Instructor() {
     }
@@ -65,6 +71,23 @@ public class Instructor {
 
     public void setInstructorDetail(InstructorDetail instructorDetail) {
         this.instructorDetail = instructorDetail;
+    }
+
+    public List<Course> getCourseList() {
+        return courseList;
+    }
+
+    public void setCourseList(List<Course> courseList) {
+        this.courseList = courseList;
+    }
+
+    // Convenience method for bi-directional relationship
+    public void add(Course tempCourse) {
+        if (courseList == null) {
+            courseList = new ArrayList<>();
+        }
+        courseList.add(tempCourse);
+        tempCourse.setInstructor(this);
     }
 
     @Override

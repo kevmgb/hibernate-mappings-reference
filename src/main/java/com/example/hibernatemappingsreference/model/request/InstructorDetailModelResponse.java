@@ -1,4 +1,4 @@
-package com.example.hibernatemappingsreference.model;
+package com.example.hibernatemappingsreference.model.request;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Getter;
@@ -10,7 +10,7 @@ import lombok.ToString;
 @Getter
 @Setter
 @ToString
-public class InstructorDetailModel {
+public class InstructorDetailModelResponse {
     @JsonProperty("youtube_channel")
     private String youtubeChannel;
 
