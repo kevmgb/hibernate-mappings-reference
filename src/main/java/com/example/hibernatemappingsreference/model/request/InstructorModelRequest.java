@@ -24,7 +24,7 @@ public class InstructorModelRequest {
     private String email;
 
     @JsonProperty("instructor_detail")
-    private InstructorDetailModelResponse instructorDetail;
+    private InstructorDetailModelRequest instructorDetail;
 
     @JsonProperty("instructor_courses")
     private List<Course> courseList;

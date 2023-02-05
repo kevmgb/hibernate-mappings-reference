@@ -1,6 +1,8 @@
 package com.example.hibernatemappingsreference.controller;
 
+import com.example.hibernatemappingsreference.model.request.CourseReviewRequest;
 import com.example.hibernatemappingsreference.model.request.InstructorModelRequest;
+import com.example.hibernatemappingsreference.model.response.CourseModelResponse;
 import com.example.hibernatemappingsreference.model.response.InstructorDetailModelResponse;
 import com.example.hibernatemappingsreference.model.response.InstructorModelResponse;
 import com.example.hibernatemappingsreference.service.MappingsService;
@@ -30,5 +32,15 @@ public class MappingsController {
     @GetMapping("/getInstructorDetail/{id}")
     private InstructorModelRequest getInstructorDetail(@PathVariable String id) {
         return service.getInstructorDetail(id);
+    }
+
+    @PostMapping("/course/review")
+    private String reviewCourse(@RequestBody @Validated CourseReviewRequest courseReviewRequest) {
+        return service.reviewCourse(courseReviewRequest);
+    }
+
+    @GetMapping("/getCourse/{id}")
+    private CourseModelResponse getCourse(@PathVariable String id) {
+        return service.getCourse(id);
     }
 }

@@ -10,7 +10,7 @@ import lombok.ToString;
 @Getter
 @Setter
 @ToString
-public class InstructorDetailModelResponse {
+public class InstructorDetailModelRequest {
     @JsonProperty("youtube_channel")
     private String youtubeChannel;
 

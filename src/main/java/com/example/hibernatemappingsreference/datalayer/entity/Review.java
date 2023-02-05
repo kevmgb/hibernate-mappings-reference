@@ -14,6 +14,22 @@ public class Review {
     @Column(name = "comment")
     private String comment;
 
-    @Column(name = "course_id")
-    private int courseId;
+    public Review() {
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public String getComment() {
+        return comment;
+    }
+
+    public void setComment(String comment) {
+        this.comment = comment;
+    }
 }

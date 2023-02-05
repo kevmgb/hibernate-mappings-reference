@@ -1,8 +1,7 @@
 package com.example.hibernatemappingsreference.model.response;
 
-import com.example.hibernatemappingsreference.datalayer.entity.Course;
 import com.example.hibernatemappingsreference.model.dto.CourseDto;
-import com.example.hibernatemappingsreference.model.request.InstructorDetailModelResponse;
+import com.example.hibernatemappingsreference.model.request.InstructorDetailModelRequest;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -27,7 +26,7 @@ public class InstructorModelResponse {
     private String email;
 
     @JsonProperty("instructor_detail")
-    private InstructorDetailModelResponse instructorDetail;
+    private InstructorDetailModelRequest instructorDetail;
 
     @JsonProperty("instructor_courses")
     private List<CourseDto> courseList = new ArrayList<>();
