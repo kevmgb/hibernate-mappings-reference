@@ -24,6 +24,7 @@ public class MappingsServiceImpl implements MappingsService {
     private final InstructorRepository instructorRepository;
     private final InstructorDetailRepository instructorDetailRepository;
     private final CourseRepository courseRepository;
+
     public MappingsServiceImpl(InstructorRepository instructorRepository,
                                InstructorDetailRepository instructorDetailRepository,
                                CourseRepository courseRepository) {
